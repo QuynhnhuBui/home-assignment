@@ -1,74 +1,100 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import {
+  Image,
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomButton from "@/components/CustomButton";
+import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { Plant, RootState } from "@/store";
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const plants = useSelector((state: RootState) => state.plants.plants);
+  const renderItem = ({ item }: { item: Plant }) => (
+    <TouchableOpacity
+      style={styles.itemWrapper}
+      onPress={() => {
+        router.navigate({
+          pathname: "/detail",
+          params: {
+            id: item.id,
+            uri: item.uri,
+            name: item.name,
+            description: item.description,
+          },
+        });
+      }}
+    >
+      <Image
+        source={{ uri: item.uri }}
+        style={styles.image}
+        width={150}
+        height={150}
+      />
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.text}>Description: {item.description}</Text>
+      <Text style={styles.text}>Date: {item.date}</Text>
+    </TouchableOpacity>
+  );
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.wrapper}>
+        {plants.length > 0 ? (
+          <FlatList
+            data={plants}
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+          />
+        ) : (
+          <View style={styles.noItem}>
+            <Text>You don't have any plants</Text>
+          </View>
+        )}
+
+        <View style={styles.button}>
+          <CustomButton
+            text="Add Plant"
+            backgroundColor="green"
+            onPress={() => {
+              router.navigate("/scan");
+            }}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  itemWrapper: {
+    margin: 8,
+    borderColor: "grey",
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  image: { alignSelf: "center", borderRadius: 8 },
+  title: { fontWeight: "700", marginVertical: 8, fontSize: 24 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "white",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  noItem: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
+  button: {
+    justifyContent: "center",
+    padding: 8,
+    marginBottom: 40,
+  },
+  wrapper: { flex: 1 },
+  text: { fontSize: 16 },
 });
