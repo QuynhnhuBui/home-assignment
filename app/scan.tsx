@@ -5,7 +5,6 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  Button,
   ScrollView,
   Modal,
 } from "react-native";
@@ -17,7 +16,7 @@ import { useDispatch } from "react-redux";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { addPlant } from "@/store";
-import * as FileSystem from "expo-file-system";
+
 const ScanView = () => {
   const dispatch = useDispatch();
   const [permission, requestPermission] = useCameraPermissions();
@@ -49,16 +48,8 @@ const ScanView = () => {
     setShowCamera(false);
     const photo = await cameraRef.current?.takePictureAsync();
     if (photo) {
-      const fileInfo = await FileSystem.getInfoAsync(photo.uri);
-      if (fileInfo.exists) {
-        setUri(photo.uri);
-      } else {
-        console.error(
-          "File does not exist immediately after taking the picture"
-        );
-      }
+      setUri(photo?.uri);
     }
-    // setUri(photo?.uri);
   };
   const resetData = () => {
     setDescription("");
@@ -119,7 +110,7 @@ const ScanView = () => {
             placeholder="Name"
             type="name"
             onCallback={(text) => {
-              setName(text.trim());
+              setName(text);
             }}
             value={name}
           />
@@ -128,7 +119,7 @@ const ScanView = () => {
             multiline={true}
             type="note"
             onCallback={(text) => {
-              setDescription(text.trim());
+              setDescription(text);
             }}
             value={description}
           />

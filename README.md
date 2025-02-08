@@ -34,3 +34,17 @@ From **Home Screen**:
 2. Start the app
 
    yarn start
+
+### List View and Bottom Bar
+
+![List View](screenshots/list-view-empty.jpg)
+![List View](screenshots/list-view.jpg)
+
+### Scan View
+
+![Scan View](screenshots/scan-view-empty.jpg)
+![Scan View](screenshots/scan-view.jpg)
+
+### Detail View
+
+![Scan View](screenshots/detail-view.jpg)

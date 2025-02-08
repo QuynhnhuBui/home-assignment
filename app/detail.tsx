@@ -5,7 +5,6 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  Button,
   ScrollView,
   Modal,
 } from "react-native";
@@ -15,9 +14,7 @@ import CustomButton from "@/components/CustomButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch } from "react-redux";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
-import { addPlant, Plant, updatePlant } from "@/store";
-import * as FileSystem from "expo-file-system";
+import { Plant, updatePlant } from "@/store";
 const Detail = () => {
   const params = useLocalSearchParams<Plant>();
   const dispatch = useDispatch();
@@ -59,11 +56,7 @@ const Detail = () => {
       setUri(photo?.uri);
     }
   };
-  const resetData = () => {
-    setDescription("");
-    setName("");
-    setUri("");
-  };
+
   const saveData = () => {
     if (photoUri && name.length > 0) {
       dispatch(
@@ -114,7 +107,7 @@ const Detail = () => {
             placeholder="Name"
             type="name"
             onCallback={(text) => {
-              setName(text.trim());
+              setName(text);
             }}
             value={name}
           />
@@ -123,7 +116,7 @@ const Detail = () => {
             multiline={true}
             type="note"
             onCallback={(text) => {
-              setDescription(text.trim());
+              setDescription(text);
             }}
             value={description}
           />

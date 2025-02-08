@@ -12,6 +12,7 @@ import "react-native-reanimated";
 import { Provider } from "react-redux";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { store } from "@/store";
+import { View } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,11 +41,25 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
           <Stack.Screen
             name="scan"
-            options={{ title: "Add plant", headerBackTitle: "Back" }}
+            options={{
+              title: "Add plant",
+              headerBackTitle: "Back",
+              headerStyle: {
+                backgroundColor: "white",
+              },
+              headerTintColor: "black",
+            }}
           />
           <Stack.Screen
             name="detail"
-            options={{ title: "Detail", headerBackTitle: "Back" }}
+            options={{
+              title: "Detail",
+              headerBackTitle: "Back",
+              headerStyle: {
+                backgroundColor: "white",
+              },
+              headerTintColor: "black",
+            }}
           />
         </Stack>
         <StatusBar style="auto" />
