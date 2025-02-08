@@ -37,14 +37,16 @@ From **Home Screen**:
 
 ### List View and Bottom Bar
 
-![List View](screenshots/list-view-empty.jpg)
-![List View](screenshots/list-view.jpg)
+![List View](screenshots/list_view_empty.jpg)
+
+![List View](screenshots/list_view.jpg)
 
 ### Scan View
 
-![Scan View](screenshots/scan-view-empty.jpg)
-![Scan View](screenshots/scan-view.jpg)
+![Scan View](screenshots/scan_view_empty.jpg)
+
+![Scan View](screenshots/scan_view.jpg)
 
 ### Detail View
 
-![Scan View](screenshots/detail-view.jpg)
+![Scan View](screenshots/detail_view.jpg)
