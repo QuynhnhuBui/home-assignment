@@ -15,7 +15,7 @@ From **Home Screen**:
 - Click on **Add plant** button to navigate to **Add plant** screen
 - Click on each item to navigate to **Detail** screen
 
-## Tech Stack:
+## Tech Stack
 
 1. Framework: React Native and Expo
 2. Language: TypeScript
